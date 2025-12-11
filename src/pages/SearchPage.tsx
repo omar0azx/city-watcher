@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, Bell } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Logo from "@/components/Logo";
@@ -42,79 +42,66 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-hero opacity-90 rounded-br-[100px]" />
-      <div className="absolute top-20 left-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl" />
-      
-      <div className="relative z-10 min-h-screen flex">
-        {/* Alerts Panel */}
-        <div className="w-80 p-6 flex flex-col">
-          <div className="bg-card rounded-2xl shadow-elevated p-4 flex-1 max-h-[500px] overflow-hidden">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
-              <h2 className="font-bold text-lg text-foreground">الحالات الطارئة</h2>
-              <div className="relative">
-                <Bell className="w-5 h-5 text-primary" />
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive rounded-full text-[10px] text-destructive-foreground flex items-center justify-center">
-                  {mockAlerts.length}
-                </span>
-              </div>
-            </div>
-            <div className="space-y-3 overflow-y-auto max-h-[380px] pr-1">
-              {mockAlerts.map((alert, index) => (
-                <div key={alert.id} style={{ animationDelay: `${index * 100}ms` }}>
-                  <AlertCard
-                    plateNumber={alert.plateNumber}
-                    carType={alert.carType}
-                    timeToCheckpoint={alert.timeToCheckpoint}
-                    onClick={() => handleAlertClick(alert)}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Main Search Area */}
-        <div className="flex-1 flex items-center justify-center p-8">
-          <div className="bg-card rounded-3xl shadow-elevated p-10 max-w-md w-full animate-fade-in-up">
-            <div className="flex justify-center mb-8">
-              <Logo size="lg" />
-            </div>
-            
-            <h2 className="text-3xl font-bold text-center text-foreground mb-8">
-              بحث عن السيارة
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="relative">
-                <Input
-                  type="text"
-                  placeholder="ادخل رقم اللوحة"
-                  value={plateNumber}
-                  onChange={(e) => setPlateNumber(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                  className="h-12 text-center text-lg border-2 border-primary/30 focus:border-primary rounded-xl bg-background"
+    <div className="min-h-screen bg-background flex">
+      {/* Left Side - Green Background with Alerts */}
+      <div className="w-1/2 bg-primary relative flex items-center justify-center">
+        {/* Curved edge */}
+        <div className="absolute top-0 bottom-0 -left-1 right-0 bg-primary rounded-bl-[80px]" />
+        
+        {/* Alerts Panel - Centered */}
+        <div className="relative z-10 bg-card rounded-2xl shadow-elevated p-6 w-[380px] max-h-[500px] overflow-hidden">
+          <h2 className="font-bold text-xl text-foreground mb-4 text-center">الحالات الطارئة</h2>
+          <div className="space-y-3 overflow-y-auto max-h-[380px] pr-1">
+            {mockAlerts.map((alert, index) => (
+              <div key={alert.id} style={{ animationDelay: `${index * 100}ms` }}>
+                <AlertCard
+                  plateNumber={alert.plateNumber}
+                  carType={alert.carType}
+                  timeToCheckpoint={alert.timeToCheckpoint}
+                  onClick={() => handleAlertClick(alert)}
                 />
               </div>
-              
-              <Button
-                onClick={handleSearch}
-                className="w-full"
-                size="lg"
-                variant="hero"
-              >
-                <Search className="w-5 h-5" />
-                بحث
-              </Button>
-              
-              <p className="text-center text-sm text-muted-foreground mt-4">
-                ليس لدي رقم السيارة؟{" "}
-                <button className="text-primary hover:underline font-medium">
-                  بحث بطريقة أخرى
-                </button>
-              </p>
-            </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Right Side - Search Section */}
+      <div className="w-1/2 flex flex-col items-center justify-center p-8">
+        <div className="max-w-md w-full flex flex-col items-center">
+          <div className="mb-8">
+            <Logo size="lg" />
+          </div>
+          
+          <h2 className="text-4xl font-bold text-foreground mb-10">
+            بحث عن السيارة
+          </h2>
+          
+          <div className="space-y-4 w-full">
+            <Input
+              type="text"
+              placeholder="ادخل رقم اللوحة"
+              value={plateNumber}
+              onChange={(e) => setPlateNumber(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              className="h-14 text-center text-lg border-2 border-primary rounded-full bg-background"
+            />
+            
+            <Button
+              onClick={handleSearch}
+              className="w-full h-14 rounded-full text-lg"
+              size="lg"
+              variant="hero"
+            >
+              بحث
+            </Button>
+            
+            <p className="text-center text-sm text-muted-foreground mt-6">
+              ليس لدي رقم السيارة؟{" "}
+              <button className="text-primary hover:underline font-medium">
+                بحث بطريقة أخرى
+              </button>
+            </p>
           </div>
         </div>
       </div>
