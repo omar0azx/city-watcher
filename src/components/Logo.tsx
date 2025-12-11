@@ -1,4 +1,4 @@
-import { Shield } from "lucide-react";
+import logoImage from "@/assets/logo.png";
 
 interface LogoProps {
   size?: "sm" | "md" | "lg";
@@ -7,9 +7,9 @@ interface LogoProps {
 
 const Logo = ({ size = "md", showText = true }: LogoProps) => {
   const sizeClasses = {
-    sm: "w-10 h-10",
-    md: "w-16 h-16",
-    lg: "w-24 h-24",
+    sm: "h-10",
+    md: "h-16",
+    lg: "h-24",
   };
 
   const textSizes = {
@@ -20,9 +20,11 @@ const Logo = ({ size = "md", showText = true }: LogoProps) => {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className={`${sizeClasses[size]} bg-primary rounded-full flex items-center justify-center shadow-elevated`}>
-        <Shield className="w-1/2 h-1/2 text-primary-foreground" />
-      </div>
+      <img 
+        src={logoImage} 
+        alt="شعار رصد" 
+        className={`${sizeClasses[size]} w-auto object-contain`}
+      />
       {showText && (
         <h1 className={`${textSizes[size]} font-bold text-primary`}>رصد</h1>
       )}
